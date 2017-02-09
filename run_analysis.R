@@ -58,7 +58,7 @@ y_test <- read.table("UCI HAR Dataset/test/y_test.txt")
 subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
 test <- cbind(subject_test, y_test, x_test)
 
-# merge train and test datasets and add labels
+# merge train and test datasets and add colnames
 tidyData <- rbind(train, test)
 colnames(tidyData) <- c("subject", "activity", tidyFeatureNames)
 
@@ -70,7 +70,7 @@ tidyData$activity <- factor(tidyData$activity,
 tidyData$subject <- as.factor(tidyData$subject)
 
 # Take the mean of all rows subject + activity
-tidyData <- ddply(tidyData, .(subject, activity), numcolwise(mean))
+meanTidyData <- ddply(tidyData, .(subject, activity), numcolwise(mean))
 
 # Save the tidy data to tidy.txt
-write.table(tidyData, "tidy.txt", row.names = FALSE, quote = FALSE)
+write.table(meanTidyData, "tidy.txt", row.names = FALSE, quote = FALSE)
